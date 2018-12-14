@@ -13,15 +13,11 @@ public class LoadingDialog extends BaseDialog {
     private String msg;
 
     public LoadingDialog(Context context) {
-        super(context);
+        super(context, R.layout.dialog_loading);
     }
 
-    public LoadingDialog(Context context, int layoutRes) {
-        super(context, layoutRes);
-    }
-
-    public LoadingDialog(Context context, int layoutRes, int themeResId) {
-        super(context, layoutRes, themeResId);
+    public LoadingDialog(Context context, int themeResId) {
+        super(context, R.layout.dialog_loading, themeResId);
     }
 
 

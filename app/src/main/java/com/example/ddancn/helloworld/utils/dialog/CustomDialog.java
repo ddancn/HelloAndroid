@@ -21,15 +21,11 @@ public class CustomDialog extends BaseDialog {
     private OnCancelClickListener cancelListener;
 
     public CustomDialog(Context context) {
-        super(context);
+        super(context, R.layout.dialog_custom);
     }
 
-    public CustomDialog(Context context, int layoutRes) {
-        super(context, layoutRes);
-    }
-
-    public CustomDialog(Context context, int layoutRes, int themeResId) {
-        super(context, layoutRes, themeResId);
+    public CustomDialog(Context context, int themeResId) {
+        super(context, R.layout.dialog_custom, themeResId);
     }
 
     @Override

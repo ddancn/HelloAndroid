@@ -46,12 +46,12 @@ public class HomeFragment extends Fragment {
         btnShowFromThread.setOnClickListener(v -> new Thread(() -> ToastUtil.showOnUIThread("show toast from thread")).start());
         btnCancel.setOnClickListener(v -> ToastUtil.cancel());
         btnLoadingDialog.setOnClickListener(v -> {
-            LoadingDialog dialog = new LoadingDialog(getActivity(), R.layout.dialog_loading);
+            LoadingDialog dialog = new LoadingDialog(getActivity());
             dialog.setMsg("Loading...");
             dialog.show();
         });
         btnDialog.setOnClickListener(v -> {
-            CustomDialog dialog = new CustomDialog(getActivity(), R.layout.dialog_custom, R.style.CustomDialog);
+            CustomDialog dialog = new CustomDialog(getActivity(), R.style.CustomDialog);
             dialog.setTitle("标题")
                     .setMsg("内容内容内容内容内容内容内容内容内容内容")
                     .setOnConfirmClickListener("确认", () -> {
@@ -61,7 +61,7 @@ public class HomeFragment extends Fragment {
             dialog.show();
         });
         btnDialog2.setOnClickListener(v -> {
-            CustomDialog dialog = new CustomDialog(getActivity(), R.layout.dialog_custom, R.style.CustomDialog);
+            CustomDialog dialog = new CustomDialog(getActivity(), R.style.CustomDialog);
             dialog.setTitle("TITLE")
                     .setMsg("msgmsgmsgmsgmsgmsgmsgmsgmsg")
                     .setOnConfirmClickListener("confirm", () -> {
@@ -76,9 +76,9 @@ public class HomeFragment extends Fragment {
             dialog.show();
         });
         btnCommentDialog.setOnClickListener(v -> {
-            CommentDialog dialog = new CommentDialog(getActivity(), R.layout.dialog_comment, R.style.BottomDialog);
-            dialog.setOnSendClickListener("Send", ()->{
-                ToastUtil.show("send");
+            CommentDialog dialog = new CommentDialog(getActivity(), R.style.BottomDialog);
+            dialog.setOnSendClickListener("Send", (s)->{
+                ToastUtil.show(s);
                 return true;
             });
             dialog.show();
