@@ -1,5 +1,6 @@
 package com.example.ddancn.helloworld.index;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -12,6 +13,8 @@ import com.example.ddancn.helloworld.index.frg.NotificationsFragment;
 import com.example.ddancn.helloworld.R;
 import com.example.ddancn.helloworld.index.frg.DashboardFragment;
 import com.example.ddancn.helloworld.index.frg.HomeFragment;
+import com.example.ddancn.helloworld.utils.ImageUtil;
+import com.example.ddancn.helloworld.utils.dialog.CommentDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private BottomNavigationView mBottomNavView;
     private MainPagerAdapter adapter;
+
+    public OnPictureChosen onPictureChosen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,23 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case CommentDialog.CHOOSE_PIC_FROM_ALBUM:
+                if (resultCode == RESULT_OK) {
+                    onPictureChosen.onChosen(ImageUtil.handleImage(this,data));
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
+    public interface OnPictureChosen{
+        void onChosen(String imagePath);
     }
 
     private class MainPagerAdapter extends FragmentPagerAdapter {

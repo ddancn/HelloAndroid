@@ -1,13 +1,17 @@
 package com.example.ddancn.helloworld.utils.dialog;
 
-import android.annotation.TargetApi;
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.util.DisplayMetrics;
 import android.view.Gravity;
@@ -19,14 +23,21 @@ import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.ddancn.helloworld.R;
+import com.example.ddancn.helloworld.index.MainActivity;
 import com.example.ddancn.helloworld.utils.ToastUtil;
 import com.example.ddancn.helloworld.utils.selector.emo.EmojiVpAdapter;
+import com.tbruyelle.rxpermissions2.RxPermissions;
 
-public class CommentDialog extends BaseDialog {
+
+public class CommentDialog extends BaseDialog implements MainActivity.OnPictureChosen {
+
+    public static final int CHOOSE_PIC_FROM_ALBUM = 1;
 
     private EditText editText;
     private ImageButton btnChooseEmo;
@@ -37,6 +48,9 @@ public class CommentDialog extends BaseDialog {
     private ViewPager emoViewPager;
     private LinearLayout emoPointer;
     private String txtSend;
+    private FrameLayout imageBoard;
+    private ImageView imageView;
+
     private OnSendClickListener sendListener;
 
     private SharedPreferences pref;
@@ -79,6 +93,8 @@ public class CommentDialog extends BaseDialog {
         emoBoard = findViewById(R.id.emo_board);
         emoViewPager = findViewById(R.id.emo_viewpager);
         emoPointer = findViewById(R.id.emo_pointer);
+        imageBoard = findViewById(R.id.image_board);
+        imageView = findViewById(R.id.iv_pic);
 
         editText.setOnClickListener(v -> {
             emoBoard.setVisibility(View.GONE);
@@ -97,7 +113,15 @@ public class CommentDialog extends BaseDialog {
             }
         });
         btnChoosePic.setOnClickListener(v -> {
-            ToastUtil.show("pic");
+            final RxPermissions rxPermissions = new RxPermissions((FragmentActivity)mContext);
+            rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    .subscribe(granted -> {
+                        if (granted) {
+                            openAlbum();
+                        } else {
+                            ToastUtil.show("request permission denied");
+                        }
+                    });
         });
         btnChooseFile.setOnClickListener(v -> {
             ToastUtil.show("file");
@@ -127,6 +151,10 @@ public class CommentDialog extends BaseDialog {
         adapter.setupWithPagerPoint(emoViewPager, emoPointer);
         emoViewPager.setAdapter(adapter);
 
+        //图片监听
+        imageBoard.setOnClickListener(v->{
+            imageBoard.setVisibility(View.GONE);
+        });
     }
 
     public interface OnSendClickListener {
@@ -153,6 +181,23 @@ public class CommentDialog extends BaseDialog {
         editor.putInt("softInputHeight", softInputHeight);
         editor.apply();
         return softInputHeight;
+    }
+
+    private void openAlbum() {
+        Intent intent = new Intent("android.intent.action.GET_CONTENT");
+        intent.setType("image/*");
+        ((Activity)mContext).startActivityForResult(intent, CHOOSE_PIC_FROM_ALBUM); // 打开相册
+    }
+
+    @Override
+    public void onChosen(String imagePath) {
+        if (imagePath != null) {
+            Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
+            imageBoard.setVisibility(View.VISIBLE);
+            imageView.setImageBitmap(bitmap);
+        } else {
+            ToastUtil.show("failed to get image");
+        }
     }
 
 }

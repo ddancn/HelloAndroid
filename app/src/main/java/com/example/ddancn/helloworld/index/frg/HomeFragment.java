@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.ddancn.helloworld.R;
+import com.example.ddancn.helloworld.index.MainActivity;
 import com.example.ddancn.helloworld.utils.ToastUtil;
 import com.example.ddancn.helloworld.utils.dialog.CommentDialog;
 import com.example.ddancn.helloworld.utils.dialog.CustomDialog;
@@ -77,13 +78,13 @@ public class HomeFragment extends Fragment {
         });
         btnCommentDialog.setOnClickListener(v -> {
             CommentDialog dialog = new CommentDialog(getActivity(), R.style.BottomDialog);
-            dialog.setOnSendClickListener("Send", (s)->{
+            ((MainActivity)getActivity()).onPictureChosen = dialog;
+            dialog.setOnSendClickListener("Send", s->{
                 ToastUtil.show(s);
                 return true;
             });
             dialog.show();
         });
     }
-
 
 }

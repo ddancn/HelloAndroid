@@ -4,18 +4,50 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edit_text"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginRight="12dp"
-        android:background="@drawable/edit_text"
-        android:gravity="top"
-        android:maxLines="8"
-        android:minLines="5"
-        android:padding="5dp" />
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/image_board"
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:padding="2dp"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/iv_pic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top|end"
+                android:background="#7d7d7d7d"
+                android:padding="2dp"
+                android:src="@drawable/ic_delete" />
+        </FrameLayout>
+
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/edit_text"
+            android:gravity="top"
+            android:hint="说点什么吧..."
+            android:maxLines="8"
+            android:minLines="4"
+            android:padding="5dp" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -64,8 +96,8 @@
         android:id="@+id/emo_board"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <android.support.v4.view.ViewPager
             android:id="@+id/emo_viewpager"
@@ -81,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal"/>
+            android:orientation="horizontal" />
     </LinearLayout>
 
 </LinearLayout>
