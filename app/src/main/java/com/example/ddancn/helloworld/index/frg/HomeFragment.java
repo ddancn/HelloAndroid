@@ -1,6 +1,5 @@
 package com.example.ddancn.helloworld.index.frg;
 
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -28,20 +27,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        return inflater.inflate(R.layout.fragment_home, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        btnShow = getActivity().findViewById(R.id.btn_show);
-        btnShowFromThread = getActivity().findViewById(R.id.btn_show_thread);
-        btnCancel = getActivity().findViewById(R.id.btn_cancel);
-        btnLoadingDialog = getActivity().findViewById(R.id.btn_loading_dialog);
-        btnDialog = getActivity().findViewById(R.id.btn_dialog);
-        btnDialog2 = getActivity().findViewById(R.id.btn_dialog2);
-        btnCommentDialog = getActivity().findViewById(R.id.btn_comment_dialog);
+        btnShow = view.findViewById(R.id.btn_show);
+        btnShowFromThread = view.findViewById(R.id.btn_show_thread);
+        btnCancel = view.findViewById(R.id.btn_cancel);
+        btnLoadingDialog = view.findViewById(R.id.btn_loading_dialog);
+        btnDialog = view.findViewById(R.id.btn_dialog);
+        btnDialog2 = view.findViewById(R.id.btn_dialog2);
+        btnCommentDialog = view.findViewById(R.id.btn_comment_dialog);
 
         btnShow.setOnClickListener(v -> ToastUtil.show("show toast"));
         btnShowFromThread.setOnClickListener(v -> new Thread(() -> ToastUtil.showOnUIThread("show toast from thread")).start());
@@ -69,7 +63,7 @@ public class HomeFragment extends Fragment {
                         ToastUtil.show("confirm");
                         return true;
                     })
-                    .setOnCancelClickListener("cancel", ()->{
+                    .setOnCancelClickListener("cancel", () -> {
                         ToastUtil.show("cancel");
                         return true;
 
@@ -78,13 +72,15 @@ public class HomeFragment extends Fragment {
         });
         btnCommentDialog.setOnClickListener(v -> {
             CommentDialog dialog = new CommentDialog(getActivity(), R.style.BottomDialog);
-            ((MainActivity)getActivity()).onPictureChosen = dialog;
-            dialog.setOnSendClickListener("Send", s->{
+            ((MainActivity) getActivity()).setOnChosen(dialog);
+            dialog.setOnSendClickListener("发送", s -> {
                 ToastUtil.show(s);
                 return true;
             });
             dialog.show();
         });
+        return view;
     }
+
 
 }

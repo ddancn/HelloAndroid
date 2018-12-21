@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
+        <!-- 选择的图片 -->
         <FrameLayout
             android:id="@+id/image_board"
             android:layout_width="80dp"
@@ -33,6 +34,7 @@
                 android:src="@drawable/ic_delete" />
         </FrameLayout>
 
+        <!-- 最主要的输入框 -->
         <EditText
             android:id="@+id/edit_text"
             android:layout_width="match_parent"
@@ -40,7 +42,7 @@
             android:layout_marginLeft="12dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="12dp"
-            android:background="@drawable/edit_text"
+            android:background="@null"
             android:gravity="top"
             android:hint="说点什么吧..."
             android:maxLines="8"
@@ -49,6 +51,45 @@
 
     </LinearLayout>
 
+    <!-- 选择的文件 -->
+    <RelativeLayout
+        android:id="@+id/file_board"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:visibility="gone"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:background="#22666666">
+
+        <ImageView
+            android:id="@+id/iv_file"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="centerCrop"
+            android:layout_centerVertical="true"
+            />
+
+        <TextView
+            android:id="@+id/tv_file"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_file"
+            android:layout_marginLeft="10dp"
+            android:textSize="18sp"/>
+
+        <ImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:background="@drawable/ic_delete_white"
+            android:scaleType="centerCrop"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"/>
+    </RelativeLayout>
+
+    <!-- 几个按钮们 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="55dp"
@@ -64,7 +105,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="15dp"
                 android:background="@drawable/ic_emo" />
 
             <ImageButton
@@ -72,7 +113,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="12dp"
                 android:background="@drawable/ic_pic" />
 
             <ImageButton
@@ -80,18 +121,23 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="12dp"
                 android:background="@drawable/ic_file" />
         </LinearLayout>
 
         <Button
             android:id="@+id/btn_send"
-            android:layout_width="60dp"
-            android:layout_height="40dp"
+            android:layout_width="50dp"
+            android:layout_height="30dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="12dp" />
+            android:layout_marginRight="16dp"
+            android:background="@drawable/button_bg"
+            android:textColor="#ffffff"
+            android:textSize="16sp"
+            android:enabled="false"/>
     </LinearLayout>
 
+    <!-- 表情面板 -->
     <LinearLayout
         android:id="@+id/emo_board"
         android:layout_width="match_parent"
@@ -102,7 +148,7 @@
         <android.support.v4.view.ViewPager
             android:id="@+id/emo_viewpager"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="180dp"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp">
 
@@ -113,7 +159,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"/>
     </LinearLayout>
 
 </LinearLayout>

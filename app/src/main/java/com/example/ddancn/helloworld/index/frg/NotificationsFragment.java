@@ -36,11 +36,12 @@ public class NotificationsFragment extends Fragment {
     private ImageView picture;
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_notifications, container, false);
 
-        btnChoose = getActivity().findViewById(R.id.btn_choose_photo);
-        picture = getActivity().findViewById(R.id.picture);
+        btnChoose = view.findViewById(R.id.btn_choose_photo);
+        picture = view.findViewById(R.id.picture);
+
         btnChoose.setOnClickListener(v->{
             if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(getActivity(), new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
@@ -48,11 +49,8 @@ public class NotificationsFragment extends Fragment {
                 openAlbum();
             }
         });
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_notifications, container, false);
+        return view;
     }
 
     private void openAlbum() {
@@ -142,6 +140,7 @@ public class NotificationsFragment extends Fragment {
 
     private void displayImage(String imagePath) {
         if (imagePath != null) {
+            ToastUtil.show(imagePath);
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             picture.setImageBitmap(bitmap);
         } else {

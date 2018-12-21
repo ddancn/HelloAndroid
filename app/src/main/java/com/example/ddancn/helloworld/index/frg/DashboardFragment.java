@@ -28,18 +28,16 @@ public class DashboardFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_dashboard, container, false);
-    }
+        View view = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        listView = view.findViewById(R.id.listView);
+        swipeRefresh = view.findViewById(R.id.swipe_refresh);
 
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         for(int i=0;i<10;i++)
-            mList.add("initinit");
+            mList.add("init");
         adapter = new MsgAdapter(getActivity(),R.layout.item,mList);
-        listView = getActivity().findViewById(R.id.listView);
         listView.setAdapter(adapter);
-        swipeRefresh = getActivity().findViewById(R.id.swipe_refresh);
+
+        //下拉刷新
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);//设置刷新进度条的颜色
         swipeRefresh.setOnRefreshListener(() -> new Handler().postDelayed(() -> {
             mList.add(0,"Refresh");
@@ -47,6 +45,7 @@ public class DashboardFragment extends Fragment {
             swipeRefresh.setRefreshing(false);
         }, 500));
 
+        //上拉加载
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -61,7 +60,10 @@ public class DashboardFragment extends Fragment {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
             }
         });
+
+        return view;
     }
+
     class MsgAdapter extends ArrayAdapter<String> {
         private int resourceId;
 

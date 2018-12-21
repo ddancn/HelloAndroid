@@ -5,6 +5,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +22,10 @@ public class EmojiVpAdapter extends PagerAdapter {
     private List<View> mPagers;
     private OnEmojiClickListener mEmojiClickListener;
 
+    public void setOnEmojiClickListener(OnEmojiClickListener l) {
+        this.mEmojiClickListener = l;
+    }
+
     public EmojiVpAdapter(Context context) {
         this.mContext = context;
         this.mEmojis = getEmojis();
@@ -34,11 +39,16 @@ public class EmojiVpAdapter extends PagerAdapter {
                 "\ud83d\ude11", "\ud83d\ude12", "\ud83d\ude13", "\ud83d\ude14", "\ud83d\ude15",
                 "\ud83d\ude16", "\ud83d\ude17", "\ud83d\ude18", "\ud83d\ude19", "\ud83d\ude1a",
                 "\ud83d\ude1b", "\ud83d\ude1c", "\ud83d\ude1d", "\ud83d\ude1e", "\ud83d\ude1f",
-                "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01",
-                "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01",
-                "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01",
-                "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01",
-                "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01", "\ud83d\ude01"};
+                "\ud83d\ude20", "\ud83d\ude21", "\ud83d\ude22", "\ud83d\ude23", "\ud83d\ude24",
+                "\ud83d\ude25", "\ud83d\ude26", "\ud83d\ude27", "\ud83d\ude28", "\ud83d\ude29",
+                "\ud83d\ude2a", "\ud83d\ude2b", "\ud83d\ude2c", "\ud83d\ude2d", "\ud83d\ude2e",
+                "\ud83d\ude2f", "\ud83d\ude31", "\ud83d\ude32", "\ud83d\ude33", "\ud83d\ude34",
+                "\ud83d\ude35", "\ud83d\ude36", "\ud83d\ude37", "\ud83d\ude38", "\ud83d\ude39",
+                "\ud83d\ude3a", "\ud83d\ude3b", "\ud83d\ude3c", "\ud83d\ude3d", "\ud83d\ude3e",
+                "\ud83d\ude3f", "\ud83d\ude40", "\ud83d\ude41", "\ud83d\ude42", "\ud83d\ude43",
+                "\ud83d\ude44", "\ud83d\ude45", "\ud83d\ude46", "\ud83d\ude47", "\ud83d\ude48",
+                "\ud83d\ude49", "\ud83d\ude4a", "\ud83d\ude4b", "\ud83d\ude4c", "\ud83d\ude4d",
+                "\ud83d\ude4e", "\ud83d\ude4f"};
     }
 
     public List<View> getPagerList() {
@@ -49,7 +59,7 @@ public class EmojiVpAdapter extends PagerAdapter {
             for (int i = 0; i < pageCount; i++) {
                 GridView gridView = new GridView(mContext);
                 GridView.LayoutParams params = new GridView.LayoutParams(
-                        GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.MATCH_PARENT);
+                        GridView.LayoutParams.MATCH_PARENT, GridView.LayoutParams.WRAP_CONTENT);
                 gridView.setLayoutParams(params);
                 gridView.setNumColumns(7);
 
@@ -102,23 +112,24 @@ public class EmojiVpAdapter extends PagerAdapter {
         void onClick(String emoji);
     }
 
-    public void setOnEmojiClickListener(OnEmojiClickListener l) {
-        this.mEmojiClickListener = l;
-    }
-
+    /**
+     * 设置指示器
+     * @param viewPager
+     * @param pointLayout
+     */
     public void setupWithPagerPoint(ViewPager viewPager, final LinearLayout pointLayout) {
         //初始化表情指示器
         int pageCount = getCount();
         for (int i = 0; i < pageCount; i++) {
             ImageView point = new ImageView(mContext);
-            point.setImageResource(R.drawable.dot_unselected);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(25, 25);
             params.rightMargin = 25;
-            if (i == 0) {
+            point.setImageResource(R.drawable.dot_unselected);
+            if (i == 0)
                 point.setImageResource(R.drawable.dot_selected);
-            }
             pointLayout.addView(point, params);
         }
+
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

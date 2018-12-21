@@ -8,13 +8,18 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
 import com.example.ddancn.helloworld.index.frg.NotificationsFragment;
 import com.example.ddancn.helloworld.R;
 import com.example.ddancn.helloworld.index.frg.DashboardFragment;
 import com.example.ddancn.helloworld.index.frg.HomeFragment;
+import com.example.ddancn.helloworld.utils.FileUtil;
 import com.example.ddancn.helloworld.utils.ImageUtil;
+import com.example.ddancn.helloworld.utils.ToastUtil;
 import com.example.ddancn.helloworld.utils.dialog.CommentDialog;
+import com.example.ddancn.helloworld.utils.selector.file.FileInfo;
+import com.example.ddancn.helloworld.utils.selector.file.FileSelectorFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +30,11 @@ public class MainActivity extends AppCompatActivity {
     private BottomNavigationView mBottomNavView;
     private MainPagerAdapter adapter;
 
-    public OnPictureChosen onPictureChosen;
+    private OnChosen onChosen;
+
+    public void setOnChosen(OnChosen onChosen) {
+        this.onChosen = onChosen;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +85,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
-            case CommentDialog.CHOOSE_PIC_FROM_ALBUM:
+            case CommentDialog.CHOOSE_PIC:
                 if (resultCode == RESULT_OK) {
-                    onPictureChosen.onChosen(ImageUtil.handleImage(this,data));
+                    onChosen.onPictureChosen(ImageUtil.getPath(this, data.getData()));
+                }
+                break;
+            case CommentDialog.CHOOSE_FILE:
+                if (resultCode == RESULT_OK) {
+                    //ToastUtil.show(data.getParcelableExtra(FileSelectorFragment.FILE_CHOSEN));
+                    onChosen.onFileChosen(data.getParcelableExtra(FileSelectorFragment.FILE_CHOSEN));
                 }
                 break;
             default:
@@ -86,11 +101,12 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public interface OnPictureChosen{
-        void onChosen(String imagePath);
+    public interface OnChosen {
+        void onPictureChosen(String imagePath);
+        void onFileChosen(FileInfo file);
     }
 
-    private class MainPagerAdapter extends FragmentPagerAdapter {
+    public class MainPagerAdapter extends FragmentPagerAdapter {
 
         private List<Fragment> fragments = new ArrayList<>();
 

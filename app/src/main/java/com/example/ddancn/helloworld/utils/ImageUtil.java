@@ -15,21 +15,20 @@ public class ImageUtil {
 
     private static Context mContext;
 
-    public static String handleImage(Context context, Intent data){
+    public static String getPath(Context context, Uri uri){
         mContext = context;
         if (Build.VERSION.SDK_INT >= 19) {
             // 4.4及以上系统使用这个方法处理图片
-            return handleImageOnKitKat(data);
+            return handleImageOnKitKat(uri);
         } else {
             // 4.4以下系统使用这个方法处理图片
-            return handleImageBeforeKitKat(data);
+            return handleImageBeforeKitKat(uri);
         }
     }
 
     @TargetApi(19)
-    public static String handleImageOnKitKat(Intent data) {
+    public static String handleImageOnKitKat(Uri uri) {
         String imagePath = null;
-        Uri uri = data.getData();
         Log.d("TAG", "handleImageOnKitKat: uri is " + uri);
         if (DocumentsContract.isDocumentUri(mContext, uri)) {
             // 如果是document类型的Uri，则通过document id处理
@@ -52,8 +51,7 @@ public class ImageUtil {
         return imagePath; // 返回图片路径
     }
 
-    public static String handleImageBeforeKitKat(Intent data) {
-        Uri uri = data.getData();
+    public static String handleImageBeforeKitKat(Uri uri) {
         String imagePath = getImagePath(uri, null);
         return imagePath;
     }
