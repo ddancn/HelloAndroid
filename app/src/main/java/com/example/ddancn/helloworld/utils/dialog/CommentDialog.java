@@ -104,7 +104,7 @@ public class CommentDialog extends BaseDialog implements MainActivity.OnChosen {
         //设置对话框在底部、设置软键盘模式
         if (this.getWindow() != null) {
             this.getWindow().setGravity(Gravity.BOTTOM);
-            this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE | WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN);
+            this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
         }
 
         editText = findViewById(R.id.edit_text);
@@ -146,7 +146,7 @@ public class CommentDialog extends BaseDialog implements MainActivity.OnChosen {
         btnChooseEmo.setOnClickListener(v -> {
             InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
             //切换表情面板和软键盘
-            setSoftInputHeight();
+            setEmoBoardHeight();
             if (emoBoard.isShown()) {
                 emoBoard.setVisibility(View.GONE);
                 imm.showSoftInput(editText, 0);
@@ -217,7 +217,7 @@ public class CommentDialog extends BaseDialog implements MainActivity.OnChosen {
     /**
      * 设置表情面板的高度=SP/计算
      */
-    private void setSoftInputHeight() {
+    private void setEmoBoardHeight() {
         ViewGroup.LayoutParams params = emoBoard.getLayoutParams();
         //已计算过正确的值
         if(params.height != -2 && params.height != SOFT_INPUT_DEFAULT_HEIGHT)

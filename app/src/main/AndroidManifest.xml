@@ -26,7 +26,11 @@
         <activity
             android:name=".utils.selector.file.FileSelectorActivity"
             android:label="@string/title_activity_file_selector"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".index.CommentActivity"
+            android:theme="@style/TranslucentTheme"
+            android:windowSoftInputMode="adjustResize|stateVisible"/>
     </application>
 
 </manifest>

@@ -26,7 +26,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.ddancn.helloworld.R;
+import com.example.ddancn.helloworld.index.CommentActivity;
 import com.example.ddancn.helloworld.utils.ToastUtil;
+
+import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -43,11 +46,16 @@ public class NotificationsFragment extends Fragment {
         picture = view.findViewById(R.id.picture);
 
         btnChoose.setOnClickListener(v->{
-            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(getActivity(), new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
-            } else {
-                openAlbum();
-            }
+//            if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+//                ActivityCompat.requestPermissions(getActivity(), new String[]{ Manifest.permission. WRITE_EXTERNAL_STORAGE }, 1);
+//            } else {
+//                openAlbum();
+//            }
+
+            Intent intent = new Intent(getContext(), CommentActivity.class);
+            startActivity(intent);
+            Objects.requireNonNull(getActivity()).overridePendingTransition(0,0);
+
         });
 
         return view;
