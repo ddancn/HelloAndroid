@@ -1,9 +1,6 @@
-package com.example.ddancn.helloworld.utils.selector.file;
+package com.example.ddancn.helloworld.ui.dialog.comment.selector.file;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.ContentResolver;
-import android.content.Intent;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,28 +9,20 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.example.ddancn.helloworld.MyApplication;
 import com.example.ddancn.helloworld.R;
-import com.example.ddancn.helloworld.index.MainActivity;
 import com.example.ddancn.helloworld.utils.FileUtil;
 
 import java.io.File;
-import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.SimpleFormatter;
 
 public class FileSelectorFragment extends Fragment {
 
-    public static String FILE_CHOSEN = "fileChosen";
     public static String ARG_TAB = "fileType";
     public static String[][] TYPES = {{"doc", "docx"}, {"xls", "xlsx", "csv"}, {"ppt", "pptx"}, {"pdf"}, {"txt", "rar", "zip", "mp3", "m4a", "wav"}};
     public static int[] ICON_IDS = {R.drawable.ic_doc, R.drawable.ic_xls, R.drawable.ic_ppt, R.drawable.ic_pdf, R.drawable.ic_unknown};
@@ -57,7 +46,7 @@ public class FileSelectorFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
 
         fileList = new ArrayList<>();
-        adapter = new FileRvAdapter(fileList);
+        adapter = new FileRvAdapter(getActivity(), fileList);
         recyclerView.setAdapter(adapter);
 
         new LoadFileTask().execute(getArguments().getInt(ARG_TAB));
@@ -78,60 +67,7 @@ public class FileSelectorFragment extends Fragment {
         return fragment;
     }
 
-    public class FileRvAdapter extends RecyclerView.Adapter<FileRvAdapter.ViewHolder> {
-        private ArrayList<FileInfo> mFileList;
-
-        class ViewHolder extends RecyclerView.ViewHolder {
-            View fileView;
-            ImageView fileImage;
-            TextView fileName;
-            TextView fileSize;
-            TextView fileTime;
-
-            public ViewHolder(View view) {
-                super(view);
-                fileView = view;
-                fileImage = view.findViewById(R.id.iv_file);
-                fileName = view.findViewById(R.id.tv_name);
-                fileSize = view.findViewById(R.id.tv_size);
-                fileTime = view.findViewById(R.id.tv_time);
-            }
-        }
-
-        public FileRvAdapter(ArrayList<FileInfo> fileList) {
-            mFileList = fileList;
-        }
-
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_file, parent, false);
-            final ViewHolder holder = new ViewHolder(view);
-            holder.fileView.setOnClickListener(v -> {
-                int position = holder.getAdapterPosition();
-                Intent intent = new Intent();
-                intent.putExtra(FILE_CHOSEN, mFileList.get(position));
-                getActivity().setResult(Activity.RESULT_OK, intent);
-                getActivity().finish();
-            });
-            return holder;
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            FileInfo file = mFileList.get(position);
-            holder.fileName.setText(file.getName());
-            holder.fileSize.setText(FileUtil.getFileSize(file.getSize()));
-            holder.fileTime.setText(FileUtil.getStrTime(file.getTime()));
-            holder.fileImage.setImageResource(file.getImageId());
-        }
-
-        @Override
-        public int getItemCount() {
-            return mFileList.size();
-        }
-    }
-
-    public class LoadFileTask extends AsyncTask<Integer, Integer, Void> {
+    class LoadFileTask extends AsyncTask<Integer, Integer, Void> {
 
         @Override
         protected Void doInBackground(Integer... tab) {

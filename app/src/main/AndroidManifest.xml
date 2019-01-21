@@ -24,13 +24,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".utils.selector.file.FileSelectorActivity"
+            android:name=".ui.dialog.comment.selector.file.FileSelectorActivity"
             android:label="@string/title_activity_file_selector"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".index.CommentActivity"
+            android:name=".ui.dialog.comment.CommentDialogActivity"
             android:theme="@style/TranslucentTheme"
-            android:windowSoftInputMode="adjustResize|stateVisible"/>
+            android:windowSoftInputMode="adjustResize|stateVisible" />
+        <activity android:name=".ui.dialog.comment.selector.at.AtSelectorActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>

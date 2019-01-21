@@ -1,4 +1,4 @@
-package com.example.ddancn.helloworld.utils.dialog;
+package com.example.ddancn.helloworld.ui.dialog;
 
 import android.content.Context;
 import android.widget.ProgressBar;

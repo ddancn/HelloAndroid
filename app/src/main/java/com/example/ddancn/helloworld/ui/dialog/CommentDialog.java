@@ -1,4 +1,4 @@
-package com.example.ddancn.helloworld.utils.dialog;
+package com.example.ddancn.helloworld.ui.dialog;
 
 import android.Manifest;
 import android.app.Activity;
@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
-import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -16,13 +15,11 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -37,9 +34,9 @@ import android.widget.TextView;
 import com.example.ddancn.helloworld.R;
 import com.example.ddancn.helloworld.index.MainActivity;
 import com.example.ddancn.helloworld.utils.ToastUtil;
-import com.example.ddancn.helloworld.utils.selector.emo.EmojiVpAdapter;
-import com.example.ddancn.helloworld.utils.selector.file.FileInfo;
-import com.example.ddancn.helloworld.utils.selector.file.FileSelectorActivity;
+import com.example.ddancn.helloworld.ui.dialog.comment.selector.emo.EmojiVpAdapter;
+import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileInfo;
+import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileSelectorActivity;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 

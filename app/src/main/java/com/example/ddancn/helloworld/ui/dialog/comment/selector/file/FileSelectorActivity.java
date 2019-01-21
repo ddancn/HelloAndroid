@@ -1,4 +1,4 @@
-package com.example.ddancn.helloworld.utils.selector.file;
+package com.example.ddancn.helloworld.ui.dialog.comment.selector.file;
 
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageButton;
 
 import com.example.ddancn.helloworld.R;
@@ -17,6 +16,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FileSelectorActivity extends AppCompatActivity {
+
+    public static String FILE_CHOSEN = "fileChosen";
 
     private ImageButton btnBack;
     private ViewPager mViewPager;

@@ -1,5 +1,6 @@
 package com.example.ddancn.helloworld.index.frg;
 
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -8,11 +9,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.ddancn.helloworld.R;
-import com.example.ddancn.helloworld.index.MainActivity;
 import com.example.ddancn.helloworld.utils.ToastUtil;
-import com.example.ddancn.helloworld.utils.dialog.CommentDialog;
-import com.example.ddancn.helloworld.utils.dialog.CustomDialog;
-import com.example.ddancn.helloworld.utils.dialog.LoadingDialog;
+import com.example.ddancn.helloworld.ui.dialog.comment.CommentDialogActivity;
+import com.example.ddancn.helloworld.ui.dialog.CustomDialog;
+import com.example.ddancn.helloworld.ui.dialog.LoadingDialog;
+
+import java.util.Objects;
 
 public class HomeFragment extends Fragment {
 
@@ -71,13 +73,17 @@ public class HomeFragment extends Fragment {
             dialog.show();
         });
         btnCommentDialog.setOnClickListener(v -> {
-            CommentDialog dialog = new CommentDialog(getActivity(), R.style.BottomDialog);
-            ((MainActivity) getActivity()).setOnChosen(dialog);
-            dialog.setOnSendClickListener("发送", s -> {
-                ToastUtil.show(s);
-                return true;
-            });
-            dialog.show();
+//            CommentDialog dialog = new CommentDialog(getActivity(), R.style.BottomDialog);
+//            ((MainActivity) getActivity()).setOnChosen(dialog);
+//            dialog.setOnSendClickListener("发送", s -> {
+//                ToastUtil.show(s);
+//                return true;
+//            });
+//            dialog.show();
+            Intent intent = new Intent(getContext(), CommentDialogActivity.class);
+            startActivity(intent);
+            Objects.requireNonNull(getActivity()).overridePendingTransition(0,0);
+
         });
         return view;
     }

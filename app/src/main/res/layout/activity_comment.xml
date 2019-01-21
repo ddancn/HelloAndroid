@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -9,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"/>
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +32,8 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="12dp"
                 android:padding="2dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                tools:ignore="RtlHardcoded">
 
                 <ImageView
                     android:id="@+id/iv_pic"
@@ -48,7 +51,7 @@
             </FrameLayout>
 
             <!-- 最主要的输入框 -->
-            <EditText
+            <com.sunhapper.spedittool.view.SpEditText
                 android:id="@+id/edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,7 +63,10 @@
                 android:hint="说点什么吧..."
                 android:maxLines="8"
                 android:minLines="4"
-                android:padding="5dp" />
+                android:padding="5dp"
+                app:react_keys="#@"
+                app:sp_mode="integrated"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 
@@ -69,7 +75,8 @@
             android:id="@+id/file_board"
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:layout_marginHorizontal="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
             android:background="#22666666"
             android:visibility="gone">
@@ -88,7 +95,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_toRightOf="@id/iv_file"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                tools:ignore="RtlHardcoded" />
 
             <ImageButton
                 android:id="@+id/btn_delete"
@@ -98,7 +106,8 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/ic_delete_white"
-                android:scaleType="centerCrop" />
+                android:scaleType="centerCrop"
+                tools:ignore="RtlHardcoded" />
         </RelativeLayout>
 
         <!-- 几个按钮们 -->
@@ -118,7 +127,8 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="15dp"
-                    android:background="@drawable/ic_emo" />
+                    android:background="@drawable/ic_emo"
+                    tools:ignore="RtlHardcoded" />
 
                 <ImageButton
                     android:id="@+id/btn_choose_pic"
@@ -126,7 +136,8 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="12dp"
-                    android:background="@drawable/ic_pic" />
+                    android:background="@drawable/ic_pic"
+                    tools:ignore="RtlHardcoded" />
 
                 <ImageButton
                     android:id="@+id/btn_choose_file"
@@ -134,7 +145,18 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="12dp"
-                    android:background="@drawable/ic_file" />
+                    android:background="@drawable/ic_file"
+                    tools:ignore="RtlHardcoded" />
+
+                <ImageButton
+                    android:id="@+id/btn_choose_at"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="12dp"
+                    android:background="@drawable/ic_at"
+                    tools:ignore="RtlHardcoded" />
+
             </LinearLayout>
 
             <Button
@@ -145,8 +167,10 @@
                 android:layout_marginRight="16dp"
                 android:background="@drawable/button_bg"
                 android:enabled="false"
+                android:text="send"
                 android:textColor="#ffffff"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                tools:ignore="HardcodedText,RtlHardcoded" />
         </LinearLayout>
 
         <!-- 表情面板 -->

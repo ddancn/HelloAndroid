@@ -8,18 +8,16 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.example.ddancn.helloworld.index.frg.NotificationsFragment;
 import com.example.ddancn.helloworld.R;
 import com.example.ddancn.helloworld.index.frg.DashboardFragment;
 import com.example.ddancn.helloworld.index.frg.HomeFragment;
-import com.example.ddancn.helloworld.utils.FileUtil;
+import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileSelectorActivity;
 import com.example.ddancn.helloworld.utils.ImageUtil;
-import com.example.ddancn.helloworld.utils.ToastUtil;
-import com.example.ddancn.helloworld.utils.dialog.CommentDialog;
-import com.example.ddancn.helloworld.utils.selector.file.FileInfo;
-import com.example.ddancn.helloworld.utils.selector.file.FileSelectorFragment;
+import com.example.ddancn.helloworld.ui.dialog.CommentDialog;
+import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileInfo;
+import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileSelectorFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -92,8 +90,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case CommentDialog.CHOOSE_FILE:
                 if (resultCode == RESULT_OK) {
-                    //ToastUtil.show(data.getParcelableExtra(FileSelectorFragment.FILE_CHOSEN));
-                    onChosen.onFileChosen(data.getParcelableExtra(FileSelectorFragment.FILE_CHOSEN));
+                    onChosen.onFileChosen(data.getParcelableExtra(FileSelectorActivity.FILE_CHOSEN));
                 }
                 break;
             default:

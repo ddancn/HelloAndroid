@@ -1,4 +1,4 @@
-package com.example.ddancn.helloworld.utils.selector.file;
+package com.example.ddancn.helloworld.ui.dialog.comment.selector.file;
 
 import android.os.Parcel;
 import android.os.Parcelable;

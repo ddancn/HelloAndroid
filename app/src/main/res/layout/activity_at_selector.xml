@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.dialog.comment.selector.at.AtSelectorActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize">
+
+        <ImageButton
+            android:id="@+id/btn_back"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="RtlHardcoded" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="\@成员"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="22sp"
+            tools:ignore="HardcodedText" />
+
+        <Button
+            android:id="@+id/btn_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确定"
+            android:background="@null"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/colorPrimary"
+            android:textSize="20sp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#22333333" />
+
+    <EditText
+        android:id="@+id/edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="26dp"
+        android:background="@drawable/edit_text"
+        android:hint="搜索"
+        android:drawablePadding="10dp"
+        android:paddingLeft="18dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_at_user"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

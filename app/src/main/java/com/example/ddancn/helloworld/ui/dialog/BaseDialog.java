@@ -1,4 +1,4 @@
-package com.example.ddancn.helloworld.utils.dialog;
+package com.example.ddancn.helloworld.ui.dialog;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -3,9 +3,8 @@ package com.example.ddancn.helloworld.utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
-import com.example.ddancn.helloworld.utils.selector.file.FileInfo;
+import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileInfo;
 
 import java.io.File;
 import java.text.DecimalFormat;

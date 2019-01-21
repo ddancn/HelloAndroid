@@ -81,4 +81,5 @@
         android:text="comment dialog"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_dialog2" />
+
 </android.support.constraint.ConstraintLayout>

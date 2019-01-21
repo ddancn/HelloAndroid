@@ -1,11 +1,10 @@
-package com.example.ddancn.helloworld.utils.selector.emo;
+package com.example.ddancn.helloworld.ui.dialog.comment.selector.emo;
 
 import android.content.Context;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;

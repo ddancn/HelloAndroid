@@ -123,6 +123,15 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="12dp"
                 android:background="@drawable/ic_file" />
+
+            <ImageButton
+                android:id="@+id/btn_at"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:background="@drawable/ic_at" />
+
         </LinearLayout>
 
         <Button
