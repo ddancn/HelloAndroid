@@ -77,6 +77,7 @@ public class AtSelectorActivity extends AppCompatActivity implements BaseQuickAd
             checkBox.setChecked(true);
             checkedList.add(user);
         }
+        changeBtnState();
     }
 
     @Override
@@ -89,7 +90,19 @@ public class AtSelectorActivity extends AppCompatActivity implements BaseQuickAd
         } else {
             checkedList.remove(user);
         }
-
+        changeBtnState();
     }
 
+    private void changeBtnState(){
+        int size = checkedList.size();
+        if(size == 0){
+            btnConfirm.setText("确定");
+            btnConfirm.setTextColor(getResources().getColor(R.color.colorGray));
+            btnConfirm.setEnabled(false);
+        } else{
+            btnConfirm.setText("确定"+checkedList.size());
+            btnConfirm.setTextColor(getResources().getColor(R.color.colorPrimary));
+            btnConfirm.setEnabled(true);
+        }
+    }
 }

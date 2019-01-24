@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import com.example.ddancn.helloworld.R;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class FileSelectorActivity extends AppCompatActivity {
@@ -41,9 +42,7 @@ public class FileSelectorActivity extends AppCompatActivity {
         for (int i = 0; i < FileSelectorFragment.TYPES.length; i++)
             mAdapter.addFragment(FileSelectorFragment.newInstance(i));
 
-        List<String> list = new ArrayList<>();
-        for(int i=0;i<TYPE_NAMES.length;i++)
-            list.add(TYPE_NAMES[i]);
+        List<String> list = Arrays.asList(TYPE_NAMES);
         mAdapter.setTitles(list);
         mViewPager.setAdapter(mAdapter);
         mViewPager.setOffscreenPageLimit(5);

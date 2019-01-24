@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -29,17 +30,21 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ddancn.helloworld.R;
+import com.example.ddancn.helloworld.index.MainActivity;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.at.AtSelectorActivity;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.at.UserInfo;
+import com.example.ddancn.helloworld.ui.dialog.comment.selector.pic.Glide4Engine;
 import com.example.ddancn.helloworld.utils.DimenUtil;
-import com.example.ddancn.helloworld.utils.ImageUtil;
 import com.example.ddancn.helloworld.utils.ToastUtil;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.emo.EmojiVpAdapter;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileInfo;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileSelectorActivity;
-import com.orhanobut.logger.Logger;
 import com.sunhapper.spedittool.view.SpEditText;
 import com.tbruyelle.rxpermissions2.RxPermissions;
+import com.zhihu.matisse.Matisse;
+import com.zhihu.matisse.MimeType;
+import com.zhihu.matisse.engine.impl.GlideEngine;
+import com.zhihu.matisse.filter.Filter;
 
 import java.util.ArrayList;
 
@@ -113,6 +118,7 @@ public class CommentDialogActivity extends AppCompatActivity {
             rollback = false;
             openAtChooser();
         });
+
         btnSend.setOnClickListener(v -> {
             //返回结果
             ToastUtil.show(editText.getText().toString());
@@ -134,6 +140,8 @@ public class CommentDialogActivity extends AppCompatActivity {
             hasFile = false;
             changeBtnState();
         });
+
+        HANDLER.postDelayed(this::setEmoBoardHeight, 200);
     }
 
     @Override
@@ -168,10 +176,6 @@ public class CommentDialogActivity extends AppCompatActivity {
                     rollback = true;
                     openAtChooser();
                     break;
-                case "#":
-                    editText.insertSpecialStr(" #tagtag# ", true, 1,
-                            new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)));
-                    break;
                 default:
             }
         });
@@ -183,7 +187,7 @@ public class CommentDialogActivity extends AppCompatActivity {
     private void switchBoard() {
         //隐藏模式防止切回页面时表情面板和软键盘冲突
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        setEmoBoardHeight();
+//        setEmoBoardHeight();
         if (emoBoard.isShown()) {
             lockContentHeight();
             emoBoard.setVisibility(View.GONE);
@@ -213,9 +217,14 @@ public class CommentDialogActivity extends AppCompatActivity {
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
                     if (granted) {
-                        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                        intent.setType("image/*");
-                        startActivityForResult(intent, CHOOSE_PIC);
+                        Matisse.from(this)
+                                .choose(MimeType.ofAll(),false)
+                                .countable(true)
+                                .maxSelectable(1)
+                                .thumbnailScale(0.85f)
+                                .imageEngine(new Glide4Engine())
+                                .theme(R.style.Matisse_Theme)
+                                .forResult(CHOOSE_PIC);
                     } else {
                         ToastUtil.show("请在设置中打开存储权限");
                     }
@@ -308,7 +317,7 @@ public class CommentDialogActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case CHOOSE_PIC:
-                    onPictureChosen(ImageUtil.getPath(this, data.getData()));
+                    onPictureChosen(Matisse.obtainPathResult(data).get(0));
                     break;
                 case CHOOSE_FILE:
                     onFileChosen(data.getParcelableExtra(FileSelectorActivity.FILE_CHOSEN));

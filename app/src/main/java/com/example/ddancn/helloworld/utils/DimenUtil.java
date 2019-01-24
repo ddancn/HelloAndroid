@@ -40,8 +40,6 @@ public class DimenUtil {
         activity.getWindowManager().getDefaultDisplay().getMetrics(metrics);
         //计算软键盘的高度
         int softInputHeight = metrics.heightPixels - rect.bottom;
-        if (softInputHeight <= 0)
-            softInputHeight = SOFT_INPUT_DEFAULT_HEIGHT;
         //存到SP
         SharedPreferences.Editor editor = pref.edit();
         editor.putInt(SOFT_INPUT_HEIGHT, softInputHeight);

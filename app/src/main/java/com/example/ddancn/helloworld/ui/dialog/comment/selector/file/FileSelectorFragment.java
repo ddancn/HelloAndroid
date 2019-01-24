@@ -49,8 +49,9 @@ public class FileSelectorFragment extends Fragment {
         adapter = new FileRvAdapter(getActivity(), fileList);
         recyclerView.setAdapter(adapter);
 
-        new LoadFileTask().execute(getArguments().getInt(ARG_TAB));
-
+        if(getArguments()!=null) {
+            new LoadFileTask().execute(getArguments().getInt(ARG_TAB));
+        }
         return view;
     }
 
