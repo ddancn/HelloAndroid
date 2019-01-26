@@ -46,14 +46,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-
-    <style name="Matisse.Theme" parent="Matisse.Zhihu">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="toolbar">@color/colorPrimary</item>
-        <item name="item.checkCircle.backgroundColor">@color/colorPrimary</item>
-        <item name="bottomToolbar.apply.textColor">@color/colorPrimary</item>
-        <item name="preview.bottomToolbar.apply.textColor">@color/colorPrimary</item>
-
-    </style>
 </resources>

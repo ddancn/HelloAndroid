@@ -47,15 +47,13 @@
     <EditText
         android:id="@+id/edit_text"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="35dp"
         android:layout_marginLeft="26dp"
         android:layout_marginRight="26dp"
         android:background="@drawable/edit_text"
         android:hint="搜索"
-        android:drawablePadding="10dp"
+        android:drawablePadding="6dp"
         android:paddingLeft="18dp"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
         tools:ignore="HardcodedText,RtlHardcoded,RtlSymmetry" />
 
     <android.support.v7.widget.RecyclerView

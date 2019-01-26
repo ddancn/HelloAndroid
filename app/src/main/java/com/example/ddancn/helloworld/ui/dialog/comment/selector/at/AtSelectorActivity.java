@@ -40,7 +40,7 @@ public class AtSelectorActivity extends AppCompatActivity implements BaseQuickAd
         editText = findViewById(R.id.edit_text);
         recyclerView = findViewById(R.id.rv_at_user);
         Drawable drawable = getResources().getDrawable(R.drawable.ic_search);
-        drawable.setBounds(0,0,DimenUtil.dp2px(25),DimenUtil.dp2px(25));
+        drawable.setBounds(0,0,DimenUtil.dp2px(20),DimenUtil.dp2px(20));
         editText.setCompoundDrawables(drawable,null,null,null);
 
         ArrayList<UserInfo> list = new ArrayList<>();

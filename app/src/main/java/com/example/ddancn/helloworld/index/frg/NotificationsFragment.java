@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ScrollView;
 
 import com.example.ddancn.helloworld.R;
 import com.example.ddancn.helloworld.ui.dialog.comment.CommentDialogActivity;
@@ -19,6 +20,7 @@ public class NotificationsFragment extends Fragment {
 
     private Button btnChoose;
     private SpEditText spEditText;
+    private ScrollView scrollView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class NotificationsFragment extends Fragment {
 
         btnChoose = view.findViewById(R.id.btn_choose_photo);
         spEditText = view.findViewById(R.id.edit_text);
+        scrollView = view.findViewById(R.id.scl_view);
 
         btnChoose.setOnClickListener(v->{
             Intent intent = new Intent(getContext(), CommentDialogActivity.class);
@@ -34,20 +37,11 @@ public class NotificationsFragment extends Fragment {
 
         });
 
-        spEditText.setKeyReactListener(new SpEditText.KeyReactListener() {
-            @Override
-            public void onKeyReact(String key) {
-                switch (key) {
-                    case "@":
-                        spEditText.insertSpecialStr(" @ddancn ", true, 0,
-                                new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)));
-                        break;
-                    case "#":
-                        spEditText.insertSpecialStr(" #tagtag# ", true, 1,
-                                new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)));
-                        break;
-                    default:
-                }
+        spEditText.setOnFocusChangeListener((v, hasFocus) -> {
+            if(hasFocus){
+                scrollView.postDelayed(()->{
+                    scrollView.scrollTo(0, scrollView.getHeight());
+                }, 200);
             }
         });
 

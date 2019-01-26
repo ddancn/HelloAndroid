@@ -16,10 +16,10 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity
             android:name=".index.MainActivity"
-            android:label="@string/title_activity_main">
+            android:label="@string/title_activity_main"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -31,8 +31,10 @@
             android:name=".ui.dialog.comment.CommentDialogActivity"
             android:theme="@style/TranslucentTheme"
             android:windowSoftInputMode="adjustResize|stateVisible" />
-        <activity android:name=".ui.dialog.comment.selector.at.AtSelectorActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+        <activity
+            android:name=".ui.dialog.comment.selector.at.AtSelectorActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden"/>
     </application>
 
 </manifest>

@@ -4,9 +4,9 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
@@ -30,23 +30,22 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.ddancn.helloworld.R;
-import com.example.ddancn.helloworld.index.MainActivity;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.at.AtSelectorActivity;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.at.UserInfo;
-import com.example.ddancn.helloworld.ui.dialog.comment.selector.pic.Glide4Engine;
-import com.example.ddancn.helloworld.utils.DimenUtil;
-import com.example.ddancn.helloworld.utils.ToastUtil;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.emo.EmojiVpAdapter;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileInfo;
 import com.example.ddancn.helloworld.ui.dialog.comment.selector.file.FileSelectorActivity;
+import com.example.ddancn.helloworld.utils.DimenUtil;
+import com.example.ddancn.helloworld.utils.ToastUtil;
+import com.guoxiaoxing.phoenix.core.PhoenixOption;
+import com.guoxiaoxing.phoenix.core.model.MediaEntity;
+import com.guoxiaoxing.phoenix.core.model.MimeType;
+import com.guoxiaoxing.phoenix.picker.Phoenix;
 import com.sunhapper.spedittool.view.SpEditText;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.zhihu.matisse.Matisse;
-import com.zhihu.matisse.MimeType;
-import com.zhihu.matisse.engine.impl.GlideEngine;
-import com.zhihu.matisse.filter.Filter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CommentDialogActivity extends AppCompatActivity {
 
@@ -114,7 +113,7 @@ public class CommentDialogActivity extends AppCompatActivity {
         btnChooseEmo.setOnClickListener(v -> switchBoard());
         btnChoosePic.setOnClickListener(v -> checkAndOpenAlbum());
         btnChooseFile.setOnClickListener(v -> checkAndOpenFileChooser());
-        btnChooseAt.setOnClickListener(v-> {
+        btnChooseAt.setOnClickListener(v -> {
             rollback = false;
             openAtChooser();
         });
@@ -153,7 +152,7 @@ public class CommentDialogActivity extends AppCompatActivity {
     /**
      * 设置输入框的监听
      */
-    private void setEditTextListener(){
+    private void setEditTextListener() {
         editText.setOnClickListener(v -> emoBoard.setVisibility(View.GONE));
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -217,14 +216,19 @@ public class CommentDialogActivity extends AppCompatActivity {
         rxPermissions.request(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .subscribe(granted -> {
                     if (granted) {
-                        Matisse.from(this)
-                                .choose(MimeType.ofAll(),false)
-                                .countable(true)
-                                .maxSelectable(1)
-                                .thumbnailScale(0.85f)
-                                .imageEngine(new Glide4Engine())
-                                .theme(R.style.Matisse_Theme)
-                                .forResult(CHOOSE_PIC);
+                        Phoenix.with()
+                                .theme(getResources().getColor(R.color.colorPrimary))// 主题
+                                .fileType(MimeType.ofAll())//显示的文件类型图片、视频、图片和视频
+                                .maxPickNumber(1)// 最大选择数量
+                                .spanCount(4)// 每行显示个数
+                                .enablePreview(true)// 是否开启预览
+                                .enableCompress(true)// 是否开启压缩
+                                .compressPictureFilterSize(1024)//多少kb以下的图片不压缩
+                                .compressVideoFilterSize(2018)//多少kb以下的视频不压缩
+                                .thumbnailHeight(160)// 选择界面图片高度
+                                .thumbnailWidth(160)// 选择界面图片宽度
+                                .enableClickSound(false)// 是否开启点击声音
+                                .start(this, PhoenixOption.TYPE_PICK_MEDIA, CHOOSE_PIC);
                     } else {
                         ToastUtil.show("请在设置中打开存储权限");
                     }
@@ -250,7 +254,7 @@ public class CommentDialogActivity extends AppCompatActivity {
     /**
      * 打开@选择
      */
-    private void openAtChooser(){
+    private void openAtChooser() {
         Intent intent = new Intent(this, AtSelectorActivity.class);
         startActivityForResult(intent, CHOOSE_AT);
     }
@@ -317,7 +321,7 @@ public class CommentDialogActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case CHOOSE_PIC:
-                    onPictureChosen(Matisse.obtainPathResult(data).get(0));
+                    onPictureChosen(Phoenix.result(data));
                     break;
                 case CHOOSE_FILE:
                     onFileChosen(data.getParcelableExtra(FileSelectorActivity.FILE_CHOSEN));
@@ -333,9 +337,13 @@ public class CommentDialogActivity extends AppCompatActivity {
     /**
      * 处理图片的选择
      *
-     * @param imagePath 图片路径
+     * @param images 选中的图片
      */
-    public void onPictureChosen(String imagePath) {
+    public void onPictureChosen(List<MediaEntity> images) {
+        String imagePath = null;
+        if (images.size() > 0) {
+            imagePath = images.get(0).getLocalPath();
+        }
         if (imagePath != null) {
             Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
             imageBoard.setVisibility(View.VISIBLE);
@@ -350,7 +358,7 @@ public class CommentDialogActivity extends AppCompatActivity {
     /**
      * 处理文件的选择
      *
-     * @param file 自定义文件对象
+     * @param file 选中的文件对象
      */
     public void onFileChosen(FileInfo file) {
         if (file != null) {
@@ -366,11 +374,12 @@ public class CommentDialogActivity extends AppCompatActivity {
 
     /**
      * 处理@用户的选择
-     * @param users 被选中的用户列表
+     *
+     * @param users 选中的用户列表
      */
     private void onAtUserChosen(ArrayList<UserInfo> users) {
-        for(UserInfo user : users){
-            editText.insertSpecialStr("@"+user.getUsername()+" ", rollback, user,
+        for (UserInfo user : users) {
+            editText.insertSpecialStr("@" + user.getUsername() + " ", rollback, user,
                     new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)));
         }
     }
