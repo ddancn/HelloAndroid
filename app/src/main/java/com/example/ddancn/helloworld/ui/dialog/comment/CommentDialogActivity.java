@@ -140,7 +140,7 @@ public class CommentDialogActivity extends AppCompatActivity {
             changeBtnState();
         });
 
-        HANDLER.postDelayed(this::setEmoBoardHeight, 200);
+        HANDLER.postDelayed(this::setEmoBoardHeight, 500);
     }
 
     @Override

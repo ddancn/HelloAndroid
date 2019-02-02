@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,9 +16,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.ddancn.helloworld.R;
+import com.example.ddancn.helloworld.index.net.ARetrofit;
+import com.example.ddancn.helloworld.index.net.TestService;
+import com.example.ddancn.helloworld.utils.ToastUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DashboardFragment extends Fragment {
 
@@ -40,9 +53,31 @@ public class DashboardFragment extends Fragment {
         //下拉刷新
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);//设置刷新进度条的颜色
         swipeRefresh.setOnRefreshListener(() -> new Handler().postDelayed(() -> {
-            mList.add(0,"Refresh");
-            adapter.notifyDataSetChanged();
-            swipeRefresh.setRefreshing(false);
+            Retrofit retrofit = new Retrofit.Builder()
+                    .baseUrl("https://api.github.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+            Call<ResponseBody> call = retrofit.create(TestService.class).simpleGet("square", "retrofit");
+            call.enqueue(new Callback<ResponseBody>() {
+                @Override
+                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    mList.add(0,"Refresh");
+                    adapter.notifyDataSetChanged();
+                    Log.d("aaaaaa",response.toString());
+                    swipeRefresh.setRefreshing(false);
+
+                }
+
+                @Override
+                public void onFailure(Call<ResponseBody> call, Throwable t) {
+                    ToastUtil.show("fail to get data");
+                    swipeRefresh.setRefreshing(false);
+                    Log.d("aaaaaa",t.toString());
+                    t.printStackTrace();
+
+                }
+            });
+
         }, 500));
 
         //上拉加载
